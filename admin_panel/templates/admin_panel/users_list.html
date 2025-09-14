@@ -1,0 +1,47 @@
+<!-- admin_panel/templates/admin_panel/users_list.html -->
+{% extends 'admin_panel/base.html' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="mb-0">Список пользователей</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Роль</th>
+                    <th>Операции</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <a href="{% url 'user-detail' user.id %}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                        <a href="{% url 'user-edit' user.id %}" class="btn btn-outline-warning btn-sm">Редактировать</a>
+                        <a href="{% url 'user-delete' user.id %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить пользователя?');">Удалить</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">Нет зарегистрированных пользователей</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'user-create' %}" class="btn btn-success">Создать пользователя</a>
+    </div>
+</div>
+{% endblock %}

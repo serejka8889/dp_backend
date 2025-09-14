@@ -1,0 +1,33 @@
+{% extends 'admin/base.html' %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+<h1>Контакты</h1>
+<a href="{% url 'contact-create' %}" class="btn btn-primary">Добавить контакт</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Пользователь</th>
+            <th>Город</th>
+            <th>Адрес</th>
+            <th>Телефон</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.user }}</td>
+            <td>{{ contact.city }}</td>
+            <td>ул. {{ contact.street }}, дом {{ contact.house }}</td>
+            <td>{{ contact.phone }}</td>
+            <td>
+                <a href="{% url 'contact-update' contact.id %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'contact-delete' contact.id %}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">Контактов пока нет.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

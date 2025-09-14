@@ -1,0 +1,9 @@
+<!-- admin_panel/templates/admin_panel/cart_create.html -->
+{% extends 'admin_panel/form_base.html' %}
+
+{% block form_title %}Создание корзины{% endblock %}
+{% block form_header %}Создание новой корзины{% endblock %}
+
+{% block cancel_link %}{% url 'carts-list' %}{% endblock %}
+
+{% block submit_button_label %}Создать корзину{% endblock %}

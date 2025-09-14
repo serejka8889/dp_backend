@@ -1,0 +1,9 @@
+<!-- admin_panel/templates/admin_panel/cart_edit.html -->
+{% extends 'admin_panel/form_base.html' %}
+
+{% block form_title %}Редактирование корзины{% endblock %}
+{% block form_header %}Редактирование корзины пользователя: {{ object.user.email }}{% endblock %}
+
+{% block cancel_link %}{% url 'cart-detail' object.id %}{% endblock %}
+
+{% block submit_button_label %}Сохранить изменения{% endblock %}

@@ -1,0 +1,9 @@
+<!-- admin_panel/templates/admin_panel/order_create.html -->
+{% extends 'admin_panel/form_base.html' %}
+
+{% block form_title %}Создание заказа{% endblock %}
+{% block form_header %}Создание нового заказа{% endblock %}
+
+{% block cancel_link %}{% url 'orders-list' %}{% endblock %}
+
+{% block submit_button_label %}Создать заказ{% endblock %}

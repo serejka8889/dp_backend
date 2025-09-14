@@ -1,0 +1,9 @@
+<!-- admin_panel/templates/admin_panel/user_edit.html -->
+{% extends 'admin_panel/form_base.html' %}
+
+{% block form_title %}Редактирование пользователя{% endblock %}
+{% block form_header %}Редактирование пользователя: {{ object.email }}{% endblock %}
+
+{% block cancel_link %}{% url 'user-detail' object.id %}{% endblock %}
+
+{% block submit_button_label %}Сохранить изменения{% endblock %}

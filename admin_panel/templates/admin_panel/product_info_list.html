@@ -1,0 +1,35 @@
+{% extends 'admin/base.html' %}
+{% block title %}Детальная информация о товарах{% endblock %}
+{% block content %}
+<h1>Детальная информация о товарах</h1>
+<a href="{% url 'product-info-create' %}" class="btn btn-primary">Добавить информацию о товаре</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Товар</th>
+            <th>Модель</th>
+            <th>Цена</th>
+            <th>Кол-во</th>
+            <th>Магазин</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for info in product_infos %}
+        <tr>
+            <td>{{ info.product }}</td>
+            <td>{{ info.model }}</td>
+            <td>{{ info.price }} руб.</td>
+            <td>{{ info.quantity }}</td>
+            <td>{{ info.shop }}</td>
+            <td>
+                <a href="{% url 'product-info-update' info.id %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'product-info-delete' info.id %}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">Информация о товарах отсутствует.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

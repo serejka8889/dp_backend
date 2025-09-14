@@ -1,0 +1,9 @@
+<!-- admin_panel/templates/admin_panel/product_create.html -->
+{% extends 'admin_panel/form_base.html' %}
+
+{% block form_title %}Создание товара{% endblock %}
+{% block form_header %}Создание нового товара{% endblock %}
+
+{% block cancel_link %}{% url 'products-list' %}{% endblock %}
+
+{% block submit_button_label %}Создать товар{% endblock %}

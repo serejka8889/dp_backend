@@ -1,0 +1,9 @@
+<!-- admin_panel/templates/admin_panel/shop_create.html -->
+{% extends 'admin_panel/form_base.html' %}
+
+{% block form_title %}Создание магазина{% endblock %}
+{% block form_header %}Создание нового магазина{% endblock %}
+
+{% block cancel_link %}{% url 'shops-list' %}{% endblock %}
+
+{% block submit_button_label %}Создать магазин{% endblock %}

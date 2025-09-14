@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Администрация сайта{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <!-- Дополнительно стили -->
+    <style>
+        /* Дополнительные стили */
+        body {
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        a.btn {
+            transition: all 0.3s ease-in-out;
+        }
+        a.btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Верхняя навигация -->
+<header class="bg-dark py-2 sticky-top shadow-sm">
+    <div class="container-fluid">
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none">
+                <span class="fs-4 fw-bold">Администраторская панель</span>
+            </a>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{% url 'users-list' %}" class="nav-link px-2 link-light">Пользователи</a></li>
+                <li><a href="{% url 'categories-list' %}" class="nav-link px-2 link-light">Категории</a></li>
+                <li><a href="{% url 'products-list' %}" class="nav-link px-2 link-light">Товары</a></li>
+                <li><a href="{% url 'shops-list' %}" class="nav-link px-2 link-light">Магазины</a></li>
+                <li><a href="{% url 'orders-list' %}" class="nav-link px-2 link-light">Заказы</a></li>
+                <li><a href="{% url 'carts-list' %}" class="nav-link px-2 link-light">Корзины</a></li>
+                <li><a href="{% url 'contacts-list' %}" class="nav-link px-2 link-light">Контакты</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<!-- Основное содержание -->
+<div class="container my-4">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Footer -->
+<footer class="text-center p-3 small text-muted">
+    © 2023 Компания. Все права защищены.
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBQusqwRTZeN/Waq4VMWpzBwhI7jCRqWYwA3AWODXXLNOCBYCLTNnJH+1kng==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-moqv/bGA7Ve9kslraM836WoFkNYwXEQEO5WhzUYnJfySBb+h90QpVJE6JoSq4=" crossorigin="anonymous"></script>
+</body>
+</html>

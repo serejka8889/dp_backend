@@ -1,0 +1,45 @@
+<!-- admin_panel/templates/admin_panel/shops_list.html -->
+{% extends 'admin_panel/base.html' %}
+
+{% block title %}Список магазинов{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="mb-0">Список магазинов</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Связанный пользователь</th>
+                    <th>Активность</th>
+                    <th>Операции</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for shop in shops %}
+                <tr>
+                    <td>{{ shop.id }}</td>
+                    <td>{{ shop.name }}</td>
+                    <td>{{ shop.user.email }}</td>
+                    <td>{{ shop.state|yesno:'Да,Нет' }}</td>
+                    <td>
+                        <a href="{% url 'shop-detail' shop.id %}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                        <a href="{% url 'shop-edit' shop.id %}" class="btn btn-outline-warning btn-sm">Редактировать</a>
+                        <a href="{% url 'shop-delete' shop.id %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить магазин?');">Удалить</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Нет зарегистрированных магазинов</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'shop-create' %}" class="btn btn-success">Создать магазин</a>
+    </div>
+</div>
+{% endblock %}

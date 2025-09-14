@@ -1,0 +1,35 @@
+{% extends 'admin/base.html' %}
+{% block title %}Заказы{% endblock %}
+{% block content %}
+<h1>Заказы</h1>
+<a href="{% url 'order-create' %}" class="btn btn-primary">Создать заказ</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Покупатель</th>
+            <th>Сумма</th>
+            <th>Статус</th>
+            <th>Дата создания</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.pk }}</td>
+            <td>{{ order.user }}</td>
+            <td>{{ order.total_amount }} руб.</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.created_at|date:'Y-m-d H:i:s' }}</td>
+            <td>
+                <a href="{% url 'order-update' order.id %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'order-delete' order.id %}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">Заказы отсутствуют.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

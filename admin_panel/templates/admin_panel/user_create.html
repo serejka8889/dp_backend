@@ -1,0 +1,9 @@
+<!-- admin_panel/templates/admin_panel/user_create.html -->
+{% extends 'admin_panel/form_base.html' %}
+
+{% block form_title %}Создание пользователя{% endblock %}
+{% block form_header %}Создание нового пользователя{% endblock %}
+
+{% block cancel_link %}{% url 'users-list' %}{% endblock %}
+
+{% block submit_button_label %}Создать пользователя{% endblock %}

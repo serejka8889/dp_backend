@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Накладная на заказ №{{ order.id }}</title>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; background-color: #fafafa; color: #333; margin: 0; padding: 0; text-align: center;">
+    <h1 style="color: #007bff; margin-top: 2rem;">Накладная на заказ №{{ order.id }}</h1>
+    <p style="line-height: 1.6; margin-bottom: 20px;">Дата заказа: {{ order.created_at|date:'Y-m-d H:i:s' }}</p>
+    <p style="line-height: 1.6; margin-bottom: 20px;">Покупатель: {{ order.user.first_name }} {{ order.user.last_name }}</p>
+    <p style="line-height: 1.6; margin-bottom: 20px;">Email покупателя: {{ order.user.email }}</p>
+    <p style="line-height: 1.6; margin-bottom: 20px;">Общая сумма заказа: <strong style="font-weight: bold;">{{ order.total_amount|floatformat:"2" }} руб.</strong></p>
+
+    <table style="width: 80%; margin: 2rem auto; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,.1);">
+        <thead>
+            <tr style="background-color: #007bff; color: white;">
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Товар</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Модель</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Цена за единицу</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Количество</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Общая стоимость</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr style="{% cycle '' 'background-color: #f2f2f2;' %}">
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.product_name }}</td>
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.model }}</td>
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.price|floatformat:"2" }} руб.</td>
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.quantity }}</td>
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.total_cost|floatformat:"2" }} руб.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Спасибо за сотрудничество!</p>
+</body>
+</html>

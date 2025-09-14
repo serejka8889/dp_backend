@@ -1,0 +1,33 @@
+ Бинарные файлы и кэш Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Файлы и каталоги Django
+logs/*.log
+*.sqlite-wal
+*.sqlite-shm
+
+# Конфигурационные файлы среды разработки
+.env
+.env.*
+.venv
+.venv.*
+# Временные файлы и метаданные IDE
+.idea/
+.project
+.workspace
+.vscode/
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Локальные файлы конфигурации и сборочные файлы
+Dockerfile.dev
+docker-compose.override.yml
+
+

@@ -1,0 +1,25 @@
+<!-- admin_panel/templates/admin_panel/product_detail.html -->
+{% extends 'admin_panel/base.html' %}
+
+{% block title %}Товар {{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="mb-0">Товар: {{ product.name }}</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">{{ product.id }}</dd>
+            <dt class="col-sm-3">Название</dt>
+            <dd class="col-sm-9">{{ product.name }}</dd>
+            <dt class="col-sm-3">Категория</dt>
+            <dd class="col-sm-9">{{ product.category }}</dd>
+        </dl>
+        <a href="{% url 'product-edit' product.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'product-delete' product.id %}" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить товар?');">Удалить</a>
+        <a href="{% url 'products-list' %}" class="btn btn-secondary">Назад к списку товаров</a>
+    </div>
+</div>
+{% endblock %}

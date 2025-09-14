@@ -1,0 +1,27 @@
+{% extends 'admin/base.html' %}
+{% block title %}Корзины{% endblock %}
+{% block content %}
+<h1>Корзины</h1>
+<a href="{% url 'cart-create' %}" class="btn btn-primary">Создать корзину</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Пользователь</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cart in carts %}
+        <tr>
+            <td>{{ cart.user }}</td>
+            <td>
+                <a href="{% url 'cart-update' cart.id %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'cart-delete' cart.id %}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2">Корзин пока нет.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

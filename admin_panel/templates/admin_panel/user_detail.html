@@ -1,0 +1,29 @@
+<!-- admin_panel/templates/admin_panel/user_detail.html -->
+{% extends 'admin_panel/base.html' %}
+
+{% block title %}Пользователь {{ user.email }}{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="mb-0">Пользователь: {{ user.email }}</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">{{ user.id }}</dd>
+            <dt class="col-sm-3">Имя</dt>
+            <dd class="col-sm-9">{{ user.first_name }}</dd>
+            <dt class="col-sm-3">Фамилия</dt>
+            <dd class="col-sm-9">{{ user.last_name }}</dd>
+            <dt class="col-sm-3">Роль</dt>
+            <dd class="col-sm-9">{{ user.role }}</dd>
+            <dt class="col-sm-3">Активность</dt>
+            <dd class="col-sm-9">{{ user.is_active|yesno:'Да,Нет' }}</dd>
+        </dl>
+        <a href="{% url 'user-edit' user.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'user-delete' user.id %}" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить пользователя?');">Удалить</a>
+        <a href="{% url 'users-list' %}" class="btn btn-secondary">Назад к списку пользователей</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+<!-- admin_panel/templates/admin_panel/shop_detail.html -->
+{% extends 'admin_panel/base.html' %}
+
+{% block title %}Магазин {{ shop.name }}{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="mb-0">Магазин: {{ shop.name }}</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">{{ shop.id }}</dd>
+            <dt class="col-sm-3">Название</dt>
+            <dd class="col-sm-9">{{ shop.name }}</dd>
+            <dt class="col-sm-3">Связанный пользователь</dt>
+            <dd class="col-sm-9">{{ shop.user.email }}</dd>
+            <dt class="col-sm-3">Активность</dt>
+            <dd class="col-sm-9">{{ shop.state|yesno:'Да,Нет' }}</dd>
+        </dl>
+        <a href="{% url 'shop-edit' shop.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'shop-delete' shop.id %}" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить магазин?');">Удалить</a>
+        <a href="{% url 'shops-list' %}" class="btn btn-secondary">Назад к списку магазинов</a>
+    </div>
+</div>
+{% endblock %}

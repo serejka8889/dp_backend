@@ -1,0 +1,9 @@
+<!-- admin_panel/templates/admin_panel/product_edit.html -->
+{% extends 'admin_panel/form_base.html' %}
+
+{% block form_title %}Редактирование товара{% endblock %}
+{% block form_header %}Редактирование товара: {{ object.name }}{% endblock %}
+
+{% block cancel_link %}{% url 'product-detail' object.id %}{% endblock %}
+
+{% block submit_button_label %}Сохранить изменения{% endblock %}

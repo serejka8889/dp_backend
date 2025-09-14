@@ -1,0 +1,27 @@
+{% extends 'admin/base.html' %}
+{% block title %}Категории{% endblock %}
+{% block content %}
+<h1>Категории</h1>
+<a href="{% url 'category-create' %}" class="btn btn-primary">Добавить категорию</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>
+                <a href="{% url 'category-update' category.id %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'category-delete' category.id %}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2">Категорий пока нет.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

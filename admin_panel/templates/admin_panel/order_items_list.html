@@ -1,0 +1,31 @@
+{% extends 'admin/base.html' %}
+{% block title %}Элементы заказа{% endblock %}
+{% block content %}
+<h1>Элементы заказа</h1>
+<a href="{% url 'order-item-create' %}" class="btn btn-primary">Добавить элемент заказа</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Заказ</th>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order_items %}
+        <tr>
+            <td>{{ item.order }}</td>
+            <td>{{ item.product }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>
+                <a href="{% url 'order-item-update' item.id %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'order-item-delete' item.id %}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Элементов заказа нет.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
