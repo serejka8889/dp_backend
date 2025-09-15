@@ -45,7 +45,7 @@ env = environ.Env(
 )
 
 try:
-    # Явно указываем путь к файлу .env
+    # Явно указываем путь к файлу env.example
     env.read_env(os.path.join(BASE_DIR, '.env'))
 except ImproperlyConfigured as e:
     print(f"Ошибка загрузки переменных окружения: {e}")
@@ -59,9 +59,9 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS') if not DEBUG else ["*"]
 
-# Читаем переменные окружения из файла .env
+# Читаем переменные окружения из файла env.example
 env = environ.Env()
-environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(env_file=os.path.join(BASE_DIR, 'env.example'))
 
 # Application definition
 INSTALLED_APPS = [
