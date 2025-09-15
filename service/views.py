@@ -1,7 +1,6 @@
 import json
 from distutils.util import strtobool
 from tempfile import NamedTemporaryFile
-
 import jwt
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
@@ -29,7 +28,6 @@ from .models import Shop, Order, CustomUser, Product, ProductInfo, OrderItem, Ca
 from .serializers import OrderSerializer, ProductSerializer, CartSerializer, ContactSerializer,  \
     RegistrationSerializer, LoginSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, \
     MultipleCartItemsSerializer
-
 import logging
 
 logger = logging.getLogger(__name__)
