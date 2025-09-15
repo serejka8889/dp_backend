@@ -230,3 +230,4 @@ ADMIN_EMAIL = env('ADMIN_EMAIL')
 
 # Address server
 SITE_URL = env('SITE_URL')
+
