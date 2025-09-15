@@ -155,6 +155,7 @@ class CartItemSerializer(serializers.ModelSerializer):
         model = CartItem
         fields = ['id', 'product_id', 'product_name', 'category_name', 'model', 'price', 'quantity_available', 'shop', 'quantity']
 
+
 class CartSerializer(serializers.ModelSerializer):
     """
     Сериализатор для корзины пользователя.
