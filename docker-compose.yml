@@ -38,7 +38,7 @@ services:
       DJANGO_SETTINGS_MODULE: backend.settings
       SECRET_KEY: ${SECRET_KEY}
     env_file:
-      - .env
+      - env.example
 
   redis:
     image: redis:alpine
