@@ -4,7 +4,6 @@ import time
 import traceback
 import ssl
 from smtplib import SMTPException
-
 import yaml
 from celery import shared_task
 from django.contrib.auth import models
