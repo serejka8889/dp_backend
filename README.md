@@ -6,11 +6,11 @@
 
 1. Склонировать проект с гитхаба    
 
-git clone git@github.com:A-Iskakov/netology_pd_diplom.git
+git clone git@github.com:serejka8889/dp_backend.git
 
 2. Перейти в каталог проекта
     
-cd netology_pd_diplom
+cd dp_backend
 
 3. Изменить файл env.example в файл .env
 
