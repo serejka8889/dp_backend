@@ -1,6 +1,5 @@
 import base64
 from datetime import timedelta
-
 import jwt
 from django.conf import settings
 from django.db import models
@@ -9,7 +8,6 @@ from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.utils.timezone import now
 from django.core.validators import MinValueValidator
-
 from service.managers import CustomUserManager
 
 
