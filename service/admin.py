@@ -1,4 +1,3 @@
-# service/admin.py
 from django.contrib import admin
 from .models import CustomUser, Shop, Product, ProductInfo, Order, OrderItem, Contact, Cart, CartItem
 
