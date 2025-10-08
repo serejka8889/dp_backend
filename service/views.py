@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, RetrieveAPIView, DestroyAPIView, \
@@ -45,6 +46,9 @@ class LoginView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         tokens = serializer.save()
         return Response(tokens, status=status.HTTP_200_OK)
+
+class HomePageView(TemplateView):
+    template_name = 'home.html'
 
 
 # Регистрация пользователя
