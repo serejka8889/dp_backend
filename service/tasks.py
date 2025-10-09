@@ -108,7 +108,9 @@ def async_import_products(file_data, user_id):
                     category = Category.objects.create(name=category_name)
                 categories_map[category_name] = category
 
-            product = Product.objects.get_or_create(name=item['name'], category=categories_map[category_name])
+            product, created = Product.objects.get_or_create(id=item['id'], defaults={'name': item['name'],
+                                                                                      'category': categories_map[
+                                                                                          category_name]})
 
             ProductInfo.objects.update_or_create(
                 product=product,
