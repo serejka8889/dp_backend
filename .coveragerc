@@ -1,0 +1,12 @@
+[run]
+source = .
+omit =
+    *migrations*
+    *venv*
+    *manage.py*
+    *exports*
+
+[report]
+show_missing = True
+skip_covered = True
+precision = 2
