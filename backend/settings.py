@@ -15,6 +15,7 @@ from datetime import timedelta
 from pathlib import Path
 import environ
 from environ import ImproperlyConfigured
+from baton.ai import AIModels
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -70,6 +71,7 @@ environ.Env.read_env(env_file=os.path.join(BASE_DIR, 'env.example'))
 
 # Application definition
 INSTALLED_APPS = [
+    'baton',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,6 +85,7 @@ INSTALLED_APPS = [
     'celery',
     'service.apps.ServiceConfig',
     'social_django',
+    'baton.autodiscover',
 ]
 
 LOGGING = {
@@ -259,6 +262,42 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
     }
+}
+
+# Конфигурация Baton
+BATON = {
+    'SITE_HEADER': 'Backend-приложение для автоматизации закупок',
+    'SITE_TITLE': 'Backend-приложение для автоматизации закупок',
+    'INDEX_TITLE': 'Site administration',
+    'SUPPORT_HREF': 'https://github.com/otto-torino/django-baton/issues',
+    'COPYRIGHT': 'copyright © 2017 <a href="https://www.otto.to.it">Otto srl</a>', # noqa
+    'POWERED_BY': '<a href="https://www.otto.to.it">Otto srl</a>',
+    'CONFIRM_UNSAVED_CHANGES': True,
+    'SHOW_MULTIPART_UPLOADING': True,
+    'ENABLE_IMAGES_PREVIEW': True,
+    'CHANGELIST_FILTERS_IN_MODAL': True,
+    'CHANGELIST_FILTERS_ALWAYS_OPEN': True,
+    'CHANGELIST_FILTERS_FORM': True,
+    'CHANGEFORM_FIXED_SUBMIT_ROW': True,
+    'COLLAPSABLE_USER_AREA': False,
+    # 'MENU_ALWAYS_COLLAPSED': True,
+    'MENU_TITLE': 'Menu',
+    'MESSAGES_TOASTS': False,
+    'GRAVATAR_DEFAULT_IMG': 'retro',
+    'GRAVATAR_ENABLED': True,
+    'FORCE_THEME': None,
+    'LOGIN_SPLASH': '/static/core/img/login-splash.png',
+    'SEARCH_FIELD': {
+        'label': 'Search contents...',
+        'url': '/search/',
+    },
+    'BATON_CLIENT_ID': 'xxxxxxxxxxxxxxxxxxxx',
+    'BATON_CLIENT_SECRET': 'xxxxxxxxxxxxxxxxxx',
+    'IMAGE_PREVIEW_WIDTH': 200,
+    "AI": {
+        "ENABLE_TRANSLATIONS": True,
+        "ENABLE_CORRECTIONS": True,
+    },
 }
 
 # set the celery broker url
