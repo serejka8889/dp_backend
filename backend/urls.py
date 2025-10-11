@@ -9,6 +9,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework_simplejwt.views import TokenRefreshView
 from service.views import HomePageView
+from baton.autodiscover import admin
 
 
 schema_view = get_schema_view(
@@ -26,6 +27,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('baton/', include('baton.urls')),
 
     # Роуты приложения
     path('api/v1/', include('service.urls')),
