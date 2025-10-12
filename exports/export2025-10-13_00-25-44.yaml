@@ -1,0 +1,38 @@
+categories: []
+goods:
+- category: Электроника
+  model: SMARTPHONE_SAMSUNG_A52
+  name: Смартфон Samsung Galaxy A52
+  price: !!python/object/apply:decimal.Decimal
+  - '29990.00'
+  quantity: 10
+  shop: Магазин Техносити
+- category: Компьютеры
+  model: LAPTOP_ASUS_UX430UA
+  name: Ноутбук ASUS ZenBook UX430UA
+  price: !!python/object/apply:decimal.Decimal
+  - '59990.00'
+  quantity: 5
+  shop: Магазин Техносити
+- category: Электронные устройства
+  model: TABLET_APPLE_IPAD_PRO_12_9
+  name: Планшет Apple iPad Pro 12.9"
+  price: !!python/object/apply:decimal.Decimal
+  - '89990.00'
+  quantity: 7
+  shop: Магазин Техносити
+- category: Обувь
+  model: SHOES_NIKE_AIR_ZOOM_PEGASUS
+  name: Беговые кроссовки Nike Air Zoom Pegasus
+  price: !!python/object/apply:decimal.Decimal
+  - '12990.00'
+  quantity: 15
+  shop: Спортмастер
+- category: Транспорт
+  model: BIKE_STELS_NAVIGATOR_650
+  name: Велосипед Stels Navigator 650
+  price: !!python/object/apply:decimal.Decimal
+  - '19990.00'
+  quantity: 8
+  shop: Спортмастер
+shops: []
