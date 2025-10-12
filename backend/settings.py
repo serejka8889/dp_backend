@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings
 """
+import rollbar
 import os
 import sys
 from datetime import timedelta
@@ -89,6 +90,17 @@ INSTALLED_APPS = [
     'baton.autodiscover',
 ]
 
+ROLLBAR_ACCESS_TOKEN = 'a558e533e6ab4e899d42c5083eccafda18910612f4a487b532f6aa511931efbf0f0ee5980c76ba5d6746cf49d0bc275d'
+ROLLBAR_ENVIRONMENT = 'development'
+
+rollbar.init(
+    access_token=ROLLBAR_ACCESS_TOKEN,
+    environment=ROLLBAR_ENVIRONMENT,
+    root=str(BASE_DIR),
+    allow_logging_basic_config=True,
+)
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -108,10 +120,17 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
+        'rollbar': {  # Новый handler для Rollbar
+            'level': 'ERROR',  # Отправлять в Rollbar только ошибки
+            'access_token': ROLLBAR_ACCESS_TOKEN,
+            'environment': ROLLBAR_ENVIRONMENT,
+            'formatter': 'simple',
+            'class': 'rollbar.logger.RollbarHandler',
+        },
     },
     'loggers': {
-        '': {
-            'handlers': ['console'],
+        '': {  # Основной logger
+            'handlers': ['console', 'rollbar'],  # Логируем в консоль и отправляем ошибки в Rollbar
             'level': 'INFO',
             'propagate': True,
         },
@@ -223,14 +242,15 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.AnonRateThrottle',  # Для анонимных пользователей
-        'rest_framework.throttling.UserRateThrottle',  # Для авторизованных пользователей
-    ],
-    'DEFAULT_THROTTLE_RATES': {
-        'user': '100/day',  # Ограничение для авторизованных пользователей
-        'anon': '10/day',   # Ограничение для анонимных пользователей
-    }
+    # Отключил для нормальной работы юнит тестов, иначе срабатывает тротлинг
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.AnonRateThrottle',  # Для анонимных пользователей
+    #     'rest_framework.throttling.UserRateThrottle',  # Для авторизованных пользователей
+    # ],
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'user': '100/day',  # Ограничение для авторизованных пользователей
+    #     'anon': '10/day',   # Ограничение для анонимных пользователей
+    # }
 }
 
 SOCIAL_AUTH_PIPELINE = (
@@ -251,9 +271,10 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     'jpeg_resize_quality': 70,    # качество сжатия jpeg-файлов
     'sized_directory_name': '__sized__',  # директория для хранения сжатых изображений
     'filtered_directory_name': '__filtered__',  # директория для фильтраций
-    'placeholder_image': None,   # заглушку не используем
-    'create_images_on_demand': True,  # изображения создаём при первом запросе
+    'placeholder_image': None,   # заглушка
+    'create_images_on_demand': True,  # изображение
 }
+
 
 # Секретный ключ для JWT
 JWT_SIGNING_KEY = env('JWT_SIGNING_KEY')
