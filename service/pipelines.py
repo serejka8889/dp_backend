@@ -3,17 +3,17 @@ import logging
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import HttpResponse
 
-logger = logging.getLogger(__name__)  # Логгер для вывода сообщений
+logger = logging.getLogger(__name__)
 
 def jwt_response_with_refresh_token(strategy, details, backend, request=None, *args, **kwargs):
-    user = kwargs['user']  # Текущий пользователь
+    user = kwargs['user']
     refresh = RefreshToken.for_user(user)  # Генерация JWT-токена
     response_data = {
         'access': str(refresh.access_token),
         'refresh': str(refresh),
         'user_id': user.id,
         'email': user.email,
-        'role': user.role,  # Возвращается роль пользователя
+        'role': user.role,
     }
 
     # Выводим токены и данные пользователя в консоль
