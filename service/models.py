@@ -25,7 +25,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30, verbose_name='First Name')  # Имя
     last_name = models.CharField(max_length=30, verbose_name='Last Name')  # Фамилия
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='buyer')  # Роль пользователя
-    is_active = models.BooleanField(default=False, verbose_name='Active')  # Активность аккаунта
+    is_active = models.BooleanField(default=True, verbose_name='Active')  # Активность аккаунта
     is_staff = models.BooleanField(default=False, verbose_name='Staff Status')  # Необходимое поле для администратора
     is_superuser = models.BooleanField(default=False, verbose_name='Superuser Status')  # Необходимо для суперпользователя
     date_joined = models.DateTimeField(auto_now_add=True, verbose_name='Date joined')  # Дата регистрации
