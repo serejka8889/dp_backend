@@ -32,4 +32,6 @@ urlpatterns = [
     # Контакты
     path('add-contact/', AddContactView.as_view(), name='add-contact'),             # Добавление контактных данных
     path('delete-contact/<int:pk>/', DeleteContactView.as_view(), name='delete_contact'),    # Удаление контактных данных
+
+    path('trigger-test/', TriggerTestException.as_view(), name='trigger_test'),  # Роут для проверки ошибки в Rollbar
 ]
