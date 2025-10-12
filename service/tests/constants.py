@@ -1,0 +1,2 @@
+# Глобальная константа токена для тестов
+MOCK_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NSIsImV4cCI6MTYzODgyMzIwMCwiaWF0IjoxNjM4ODIzMDAwfQ.K_FakeSignature"
