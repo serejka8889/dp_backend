@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     'celery',
     'service.apps.ServiceConfig',
     'social_django',
+    'versatileimagefield',
     'baton.autodiscover',
 ]
 
@@ -116,6 +117,8 @@ LOGGING = {
         },
     },
 }
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -200,7 +203,7 @@ STATIC_ROOT = BASE_DIR / 'collected_static'
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -220,6 +223,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',  # Для анонимных пользователей
+        'rest_framework.throttling.UserRateThrottle',  # Для авторизованных пользователей
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '100/day',  # Ограничение для авторизованных пользователей
+        'anon': '10/day',   # Ограничение для анонимных пользователей
+    }
 }
 
 SOCIAL_AUTH_PIPELINE = (
@@ -234,6 +245,15 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
     'service.pipelines.jwt_response_with_refresh_token',
 )
+
+VERSATILEIMAGEFIELD_SETTINGS = {
+    'cache_length': 2592000,     # срок хранения кеша ~ месяц
+    'jpeg_resize_quality': 70,    # качество сжатия jpeg-файлов
+    'sized_directory_name': '__sized__',  # директория для хранения сжатых изображений
+    'filtered_directory_name': '__filtered__',  # директория для фильтраций
+    'placeholder_image': None,   # заглушку не используем
+    'create_images_on_demand': True,  # изображения создаём при первом запросе
+}
 
 # Секретный ключ для JWT
 JWT_SIGNING_KEY = env('JWT_SIGNING_KEY')
