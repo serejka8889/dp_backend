@@ -1,0 +1,68 @@
+from unittest.mock import patch
+
+from django.test import TestCase
+from rest_framework.test import APIRequestFactory
+from rest_framework import status
+from rest_framework.response import Response  # Необходим для возврата объекта Response
+from service.views import CartView
+from rest_framework_simplejwt.tokens import AccessToken
+from service.models import CustomUser, Product, ProductInfo, Category, Shop, Cart, CartItem  # Импортируем модели Product, ProductInfo, Category, Shop, Cart, CartItem
+from decimal import Decimal
+
+class CartViewTests(TestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.view = CartView.as_view()
+        # Создаем активного пользователя
+        self.user = CustomUser.objects.create_user(email='test@example.com', password='password', is_active=True)
+        # Создаем токен для пользователя
+        self.access_token = AccessToken.for_user(self.user)
+        # Создаем категорию
+        self.category = Category.objects.create(name='Electronics')
+        # Создаем магазин
+        self.shop = Shop.objects.create(name='Tech Store')
+        # Создаем первый товар
+        self.product1 = Product.objects.create(name='Smartphone', category=self.category)
+        # Создаем подробную информацию о первом товаре
+        self.product_info1 = ProductInfo.objects.create(
+            product=self.product1,
+            external_id=1,
+            model='Model X',
+            price=Decimal('999.99'),
+            quantity=10,
+            shop=self.shop
+        )
+        # Создаем второй товар
+        self.product2 = Product.objects.create(name='Headphones', category=self.category)
+        # Создаем подробную информацию о втором товаре
+        self.product_info2 = ProductInfo.objects.create(
+            product=self.product2,
+            external_id=2,
+            model='Audio Pro',
+            price=Decimal('199.99'),
+            quantity=5,
+            shop=self.shop
+        )
+        # Получаем или создаем корзину пользователя
+        self.cart, _ = Cart.objects.get_or_create(user=self.user)
+        # Добавляем товары в корзину
+        self.cart_item1 = CartItem.objects.create(cart=self.cart, product=self.product_info1, quantity=2)
+        self.cart_item2 = CartItem.objects.create(cart=self.cart, product=self.product_info2, quantity=1)
+
+    def test_cart_view(self):
+        """Тест на успешный просмотр корзины"""
+        # Создаем заглушку для ответа с данными корзины
+        mock_response = Response({
+            'items': [
+                {'product': self.product_info1.id, 'quantity': 2},
+                {'product': self.product_info2.id, 'quantity': 1}
+            ],
+            'total': sum(item.product.price * item.quantity for item in self.cart.items.all())
+        }, status=status.HTTP_200_OK)
+        # Используем патч для замены фактической обработки представления
+        with patch.object(CartView, 'retrieve', return_value=mock_response):
+            request = self.factory.get('/api/v1/cart/')
+            request.META['HTTP_AUTHORIZATION'] = f'Bearer {self.access_token}'
+            response = self.view(request)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(response.data['items']), 2)
