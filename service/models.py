@@ -9,6 +9,7 @@ from django.utils.crypto import get_random_string
 from django.utils.timezone import now
 from django.core.validators import MinValueValidator
 from service.managers import CustomUserManager
+from versatileimagefield.fields import VersatileImageField, PPOIField
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -28,11 +29,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, verbose_name='Staff Status')  # Необходимое поле для администратора
     is_superuser = models.BooleanField(default=False, verbose_name='Superuser Status')  # Необходимо для суперпользователя
     date_joined = models.DateTimeField(auto_now_add=True, verbose_name='Date joined')  # Дата регистрации
+    avatar = VersatileImageField('Avatar', upload_to='avatars/',  ppoi_field='avatar_ppoi', blank=True, null=True)
+    avatar_ppoi = PPOIField()
 
-    USERNAME_FIELD = 'email'  # Теперь основное поле идентификации - почта
+    USERNAME_FIELD = 'email'  # Основное поле идентификации - почта
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()  # Устанавливаем наш собственный менеджер
+    objects = CustomUserManager()
 
     # Определим уникальные имена для reverse-accessor
     groups = models.ManyToManyField(
@@ -40,7 +43,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name='groups',
         blank=True,
         help_text='The groups this user belongs to.',
-        related_name="customuser_groups",  # Уникальный related_name для групп
+        related_name="customuser_groups",
         related_query_name="customuser_group",
     )
 
@@ -72,7 +75,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return token
 
 class PasswordResetToken(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE) #, related_name="reset_tokens")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     token = models.CharField(max_length=64, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
@@ -81,7 +84,7 @@ class PasswordResetToken(models.Model):
         if not self.token:
             self.token = get_random_string(length=64)
         if not self.expires_at:
-            self.expires_at = now() + timedelta(hours=24)  # Срок действия токена — 24 часа
+            self.expires_at = now() + timedelta(hours=24)
         super().save(*args, **kwargs)
 
 
@@ -89,14 +92,14 @@ class Category(models.Model):
     """
     Модель категорий товаров.
     """
-    name = models.CharField(max_length=100, unique=True, verbose_name='Название категории')  # Название категории
+    name = models.CharField(max_length=100, unique=True, verbose_name='Название категории')
 
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.name  # Строковое представление категории
+        return self.name
 
 class Shop(models.Model):
     """
@@ -111,21 +114,23 @@ class Shop(models.Model):
         verbose_name_plural = 'Магазины'
 
     def __str__(self):
-        return self.name  # Строковое представление магазина
+        return self.name
 
 class Product(models.Model):
     """
     Основной товар.
     """
-    name = models.CharField(max_length=150, verbose_name='Название продукта')  # Название товара
+    name = models.CharField(max_length=150, verbose_name='Название продукта')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="products", verbose_name='Категория')  # К какой категории относится товар
+    image = VersatileImageField('Product Image', upload_to='products/', ppoi_field='image_ppoi', blank=True, null=True)
+    image_ppoi = PPOIField()
 
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
     def __str__(self):
-        return self.name  # Строковое представление товара
+        return self.name
 
 class ProductInfo(models.Model):
     """
@@ -143,7 +148,7 @@ class ProductInfo(models.Model):
         verbose_name_plural = 'Информационные карточки продуктов'
 
     def __str__(self):
-        return f'{self.product}: {self.shop}'  # Строковое представление товара и магазина
+        return f'{self.product}: {self.shop}'
 
 class Order(models.Model):
     """
@@ -169,7 +174,7 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
     def __str__(self):
-        return f'Заказ №{self.pk}'  # Строковое представление заказа
+        return f'Заказ №{self.pk}'
 
 class OrderItem(models.Model):
     """
@@ -184,7 +189,7 @@ class OrderItem(models.Model):
         verbose_name_plural = 'Позиции заказов'
 
     def __str__(self):
-        return f'{self.order}: {self.product}'  # Строковое представление позиции заказа
+        return f'{self.order}: {self.product}'
 
 #    def get_total(self):
 #        """Возвращает полную цену позиции"""
@@ -208,7 +213,7 @@ class Contact(models.Model):
         verbose_name_plural = 'Контакты пользователей'
 
     def __str__(self):
-        return f'{self.city}, ул.{self.street}, д.{self.house}'  # Строковое представление адреса
+        return f'{self.city}, ул.{self.street}, д.{self.house}'
 
 class Cart(models.Model):
     """
@@ -227,19 +232,19 @@ class Cart(models.Model):
         return cart
 
     def __str__(self):
-        return f"Корзина пользователя {self.user.email}"  # Строковое представление корзины
+        return f"Корзина пользователя {self.user.email}"
 
 class CartItem(models.Model):
     """
     Элемент корзины (товар в корзине).
     """
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items", verbose_name='Корзина')  # Корзина, куда добавляется элемент
-    product = models.ForeignKey(ProductInfo, on_delete=models.CASCADE, verbose_name='Продукт')  # Продукт в корзине
-    quantity = models.PositiveIntegerField(verbose_name='Количество')  # Количество товара в корзине
+    product = models.ForeignKey(ProductInfo, on_delete=models.CASCADE, verbose_name='Продукт')
+    quantity = models.PositiveIntegerField(verbose_name='Количество')
 
     class Meta:
         verbose_name = 'Товар в корзине'
         verbose_name_plural = 'Товары в корзинах'
 
     def __str__(self):
-        return f"{self.product} ({self.quantity})"  # Строковое представление товара в корзине
+        return f"{self.product} ({self.quantity})"
