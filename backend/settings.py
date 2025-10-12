@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'service.apps.ServiceConfig',
     'social_django',
     'versatileimagefield',
+    'cachalot',
     'baton.autodiscover',
 ]
 
@@ -304,6 +305,13 @@ CACHES = {
         },
     }
 }
+
+# Включаем использование django-cachalot
+CACHALOT_ENABLED = True
+
+# Специальные исключения
+# CACHALOT_UNCACHEABLE_TABLES = []
+# CACHALOT_TIMEOUT = None  # По умолчанию 86400 секунд (сутки)
 
 # Конфигурация Baton
 BATON = {
