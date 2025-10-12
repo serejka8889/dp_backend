@@ -7,29 +7,24 @@ from rest_framework.fields import FileField
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 from .tasks import *
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
     """
     Сериализатор для вывода данных пользователя.
     """
+    avatar = VersatileImageFieldSerializer(sizes=[
+        ('full_size', 'url'),
+        ('medium', 'crop__400x400'),
+        ('small', 'thumbnail__100x100'),
+    ])
+
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'first_name', 'last_name', 'role']
+        fields = ['id', 'email', 'first_name', 'last_name', 'role', 'avatar']
         read_only_fields = ['id']
 
-class PasswordResetRequestSerializer(serializers.Serializer):
-    """
-    Сериализатор для отправки запроса на сброс пароля.
-    """
-    email = serializers.EmailField(label="Email", max_length=254)
-
-    def validate_email(self, value):
-        try:
-            user = CustomUser.objects.get(email=value)
-        except CustomUser.DoesNotExist:
-            raise serializers.ValidationError("Данный email не зарегистрирован.")
-        return value
 
 class RegistrationSerializer(serializers.ModelSerializer):
     """
@@ -91,9 +86,14 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     """
     Сериализатор для товаров.
-    Включает вложенную категорию.
+    Включает вложенную категорию и обработку изображений.
     """
     category = CategorySerializer(read_only=True)
+    image = VersatileImageFieldSerializer(sizes=[
+        ('full_size', 'url'),
+        ('medium', 'crop__400x400'),
+        ('small', 'thumbnail__100x100'),
+    ])  # Добавляем обработку изображений
 
     class Meta:
         model = Product
