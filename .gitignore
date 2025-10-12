@@ -29,3 +29,7 @@ Dockerfile.dev
 docker-compose.override.yml
 
 
+/htmlcov/
+/.coverage
+/db.sqlite3
+/coverage.xml
