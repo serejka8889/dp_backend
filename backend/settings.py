@@ -49,6 +49,7 @@ env = environ.Env(
     SOCIAL_AUTH_YANDEX_SECRET=str,
     SOCIAL_AUTH_GITHUB_KEY=str,
     SOCIAL_AUTH_GITHUB_SECRET=str,
+    ROLLBAR_ACCESS_TOKEN=str,
 )
 
 try:
@@ -91,7 +92,7 @@ INSTALLED_APPS = [
     'baton.autodiscover',
 ]
 
-ROLLBAR_ACCESS_TOKEN = 'a558e533e6ab4e899d42c5083eccafda18910612f4a487b532f6aa511931efbf0f0ee5980c76ba5d6746cf49d0bc275d'
+ROLLBAR_ACCESS_TOKEN = env('ROLLBAR_ACCESS_TOKEN')
 ROLLBAR_ENVIRONMENT = 'development'
 
 rollbar.init(
