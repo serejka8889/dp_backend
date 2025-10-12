@@ -217,8 +217,8 @@ docker-compose.override.yml
 /collected_static/rest_framework/css/default.css
 /collected_static/rest_framework/js/default.js
 /collected_static/jet/js/src/layout-updaters/delete-confirmation.js
-/docker-compose.yml+
-/docker+/Dockerfile
+/docker-compose.yml
+/docker/Dockerfile
 /collected_static/admin/js/vendor/select2/i18n/dsb.js
 /redis/data/dump.rdb
 /collected_static/admin/js/vendor/select2/i18n/el.js
