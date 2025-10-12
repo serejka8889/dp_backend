@@ -357,3 +357,16 @@ class ConfirmRegistrationView(GenericAPIView):
             return Response({"detail": "Невалидный токен"}, status=status.HTTP_400_BAD_REQUEST)
         except User.DoesNotExist:
             return Response({"detail": "Пользователь не существует"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class TriggerTestException(TemplateView):
+    """
+    Представление для создания исключения
+    Возвращает деление на ноль, приводящее к ошибке
+    """
+
+    template_name = None
+
+    def get(self, request, *args, **kwargs):
+        """Метод для обработки GET-запроса."""
+        return 1 / 0
