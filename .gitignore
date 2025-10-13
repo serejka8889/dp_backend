@@ -29,3 +29,4 @@ Dockerfile.dev
 docker-compose.override.yml
 
 
+/.env
